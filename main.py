@@ -4,43 +4,58 @@ import time
 
 import requests
 
+requests.packages.urllib3.disable_warnings()  # Disable request ssl warnings
+
 INTERVAL = 3
-TOKEN = ''  # Use this token to access the HTTP API
+TOKEN = '112062291:AAHIJsFATg1YiTOZEc0i3e_3a43Gyqalavc'  # Use this token to access the HTTP API
 URL = 'https://api.telegram.org/bot'  # HTTP Bot API
-offset = 0 # ID последнего полученного обновления
+offset = 0  # ID lash update
+USERS = [567937, 73903140]
+# TODO: Написать текст хелпа
+HELP_TEXT = 'Здесь будет текст хелпа. Может быть.'
+
 
 def check_updates():
-    """Проверка обновлений на сервере и инициация действий, в зависимости от команды"""
+    """ Check servers updates """
     global offset
-    data = {'offset': offset + 1, 'limit': 5, 'timeout': 0}  # Формируем параметры запроса
+    data = {'offset': offset + 1, 'limit': 5, 'timeout': 0}
 
     try:
-        request = requests.post(URL + TOKEN + '/getUpdates', data=data)  # Отправка запроса обновлений
+        request = requests.post(URL + TOKEN + '/getUpdates', data=data)
     except:
-        log_event('Error getting updates')  # Логгируем ошибку
-        return False  # Завершаем проверку
+        log_event('Error getting updates')
+        return False
 
-    if not request.status_code == 200: return False  # Проверка ответа сервера
-    if not request.json()['ok']: return False  # Проверка успешности обращения к API
-    for update in request.json()['result']:  # Проверка каждого элемента списка
-        offset = update['update_id']  # Извлечение ID сообщения
+    if not request.status_code == 200: return False
+    if not request.json()['ok']: return False
+    for update in request.json()['result']:
+        offset = update['update_id']
 
-        # Ниже, если в обновлении отсутствует блок 'message'
-        # или же в блоке 'message' отсутствует блок 'text', тогда
         if not 'message' in update or not 'text' in update['message']:
-            log_event('Unknown update: %s' % update)  # сохраняем в лог пришедшее обновление
-            continue  # и переходим к следующему обновлению
-        from_id = update['message']['chat']['id']  # Извлечение ID чата (отправителя)
-        name = update['message']['chat']['username']  # Извлечение username отправителя
-        # if from_id <> ADMIN_ID:  # Если отправитель не является администратором, то
-        #     send_text("You're not autorized to use me!", from_id)  # ему отправляется соответствующее уведомление
-        #     log_event('Unautorized: %s' % update)  # обновление записывается в лог
-        #     continue  # и цикл переходит к следующему обновлению
-        message = update['message']['text']  # Извлечение текста сообщения
-        parameters = (offset, name, from_id, message)
-        log_event('Message (id%s) from %s (id%s): "%s"' % parameters)  # Вывод в лог ID и текста сообщения
+            log_event('Unknown update: %s' % update)
+            continue
+        from_id = update['message']['chat']['id']
 
-        # В зависимости от сообщения, выполняем необходимое действие
+        try:
+            name = update['message']['chat']['username']
+        except:
+            name = ''
+            if 'first_name' in update['message']['chat']:
+                name += update['message']['chat']['first_name']
+            if 'last_name' in update['message']['chat']:
+                name += update['message']['chat']['last_name']
+            if not name:
+                name = 'X3'
+
+        if from_id not in USERS:
+            send_text("You're not autorized to use me!", from_id)
+            log_event('Unautorized: %s' % update)
+            continue
+
+        message = update['message']['text']
+        parameters = (offset, name, from_id, message)
+        log_event('Message (id%s) from %s (id%s): "%s"' % parameters)
+
         run_command(*parameters)
 
 
@@ -65,11 +80,16 @@ def send_text(chat_id, text):
 
 
 def run_command(offset, name, from_id, cmd):
-    if cmd == '/ping':  # Ответ на ping
-        send_text(from_id, 'pong')  # Отправка ответа
+    if cmd == '/ping':
+        send_text(from_id, 'pong')
+    elif cmd == '/help':
+        send_text(from_id, HELP_TEXT)
+    else:
+        send_text(from_id, 'What do you mean? Use /help')
 
 
 if __name__ == "__main__":
+    print('run')
     while True:
         try:
             check_updates()
