@@ -14,4 +14,6 @@ HELP_TEXT = \
 *   *   *
 /help - показать это бесполезное сообщение
 /ping - понг
+
+Потыкай меня палкой: https://github.com/Egregors/SpongeBot
 """

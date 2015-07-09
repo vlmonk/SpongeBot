@@ -30,16 +30,19 @@ def check_updates():
             continue
         from_id = update['message']['chat']['id']
 
-        try:
-            name = update['message']['chat']['username']
-        except:
-            name = ''
-            if 'first_name' in update['message']['chat']:
-                name += update['message']['chat']['first_name']
-            if 'last_name' in update['message']['chat']:
-                name += update['message']['chat']['last_name']
-            if not name:
-                name = 'UNKNOWN'
+        if int(from_id) > 0:
+            try:
+                name = update['message']['chat']['username']
+            except:
+                name = ''
+                if 'first_name' in update['message']['chat']:
+                    name += update['message']['chat']['first_name']
+                if 'last_name' in update['message']['chat']:
+                    name += update['message']['chat']['last_name']
+                if not name:
+                    name = 'UNKNOWN'
+        else:
+            name = update['message']['chat']['title']
 
         if from_id not in USERS:
             # send_text("You're not autorized to use me!", from_id)
@@ -72,9 +75,9 @@ def send_text(chat_id, text):
 
 
 def run_command(offset, name, from_id, cmd):
-    if cmd == '/ping':
+    if '/ping' in cmd:
         send_text(from_id, 'pong')
-    elif cmd == '/help':
+    elif '/help' in cmd:
         send_text(from_id, HELP_TEXT)
     else:
         send_text(from_id, 'Ты кто такой? Давай, до свиданья! /help')
