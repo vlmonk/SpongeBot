@@ -1,2 +1,4 @@
 help - Show this message
 ping - Check bot status
+boobs - Show boobs!
+ass - Show butts!

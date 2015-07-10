@@ -4,10 +4,12 @@ import time
 
 from conf import USERS, URL, TOKEN, HELP_TEXT
 import requests
+from cmd.show_me import show_me_boobs, show_me_butts, show_me_turtle
 
 requests.packages.urllib3.disable_warnings()  # Disable request ssl warnings
 
 offset = 0  # ID lash update
+
 
 def check_updates():
     """ Проверка наличия обновлений """
@@ -30,7 +32,7 @@ def check_updates():
             continue
         from_id = update['message']['chat']['id']
 
-        if int(from_id) > 0:
+        if int(from_id) > 0:  # приватный чат
             try:
                 name = update['message']['chat']['username']
             except:
@@ -41,7 +43,7 @@ def check_updates():
                     name += update['message']['chat']['last_name']
                 if not name:
                     name = 'UNKNOWN'
-        else:
+        else:  # групповой чат
             name = update['message']['chat']['title']
 
         if from_id not in USERS:
@@ -56,13 +58,6 @@ def check_updates():
         run_command(*parameters)
 
 
-def log_event(text):
-    """ Логирование
-    ToDo: 1) Запись лога в файл \ db \ еще куда-нибудь """
-    event = '{}: {}'.format(time.ctime(), text)
-    print(event)
-
-
 def send_text(chat_id, text):
     """ Отправка текстового сообщения по chat_id
     ToDo: повторная отправка при неудаче """
@@ -74,10 +69,54 @@ def send_text(chat_id, text):
     return request.json()['ok']
 
 
+def send_img():
+    pass
+
+
+def send_file():
+    pass
+
+
+def log_event(text):
+    """ Логирование
+    ToDo: 1) Запись лога в файл \ db \ еще куда-нибудь """
+    event = '{}: {}'.format(time.ctime(), text)
+    print(event)
+
+
 def run_command(offset, name, from_id, cmd):
+    """
+    :param offset: id обновления
+    :param name: имя того, кто вызывал команду
+    :param from_id: id того, кто вызвал команду
+    :param cmd: команда
+    :return:
+
+    !IMPORTANT:
+    """
+    cmd = cmd.lower()
     if '/ping' in cmd:
         send_text(from_id, 'pong')
+
     elif '/help' in cmd:
         send_text(from_id, HELP_TEXT)
+
+    elif 'сиськи' in cmd or '/boobs' in cmd:
+        boobs = show_me_boobs()
+        if boobs:
+            send_text(from_id, boobs)
+        else:
+            send_text(from_id, 'Что-то пошло не так.')
+
+    elif 'жопа' in cmd or '/ass' in cmd:
+        butts = show_me_butts()
+        if butts:
+            send_text(from_id, butts)
+        else:
+            send_text(from_id, 'Что-то пошло не так.')
+
+    elif 'бурик' in cmd:
+        send_text(from_id, show_me_turtle())
+
     else:
-        send_text(from_id, 'Ты кто такой? Давай, до свиданья! /help')
+        pass
