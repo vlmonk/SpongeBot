@@ -13,5 +13,3 @@ if __name__ == "__main__":
         except KeyboardInterrupt:
             print('Прервано пользователем..')
             break
-        # except Exception:
-        #     print('Что-то пошло не так..')

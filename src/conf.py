@@ -1,27 +1,46 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import os
 
 __author__ = 'egregors'
 
-INTERVAL = 1 # частота проверки на обновления
-TOKEN = '' # Токен для доступа к API
-URL = 'https://api.telegram.org/bot' # HTTP Bot API
-USERS = [] # id пользователей, от которых можно выполнять команды
-# TODO: Написать текст хелпа
+DOCKER = True if os.environ.get('DOCKER') else False
+
+# USERS = [-10725690, 567937, 73903140, 113381144]  # id пользователей, от которых можно выполнять команды
+USERS = [567937, 73903140, 113381144]  # id пользователей, от которых можно выполнять команды
+
+if DOCKER:
+    try:
+        INTERVAL = int(os.environ['INTERVAL'])
+        TOKEN = os.environ['TOKEN']
+        USERS.append(int(os.environ['ROOM_ID']))
+
+        print('Interval is: ' + str(INTERVAL))
+        print('For token: ' + TOKEN)
+        print('For users or groups: ')
+        print(USERS)
+    except:
+        raise Exception('INTERVAL ot TOKEN is not defined')
+else:
+    INTERVAL = 3
+    TOKEN = ''  # Токен для доступа к API
+
+URL = 'https://api.telegram.org/bot'  # HTTP Bot API
+
 HELP_TEXT = \
-"""
-Здесь будет текст хелпа. Может быть.
-*   *   *
-# Команды:
-/help - показать это бесполезное сообщение
-/ping - понг
-/boobs - показать сиськи
-/ass — показать попку
+    """
+    Здесь будет текст хелпа. Может быть.
+    *   *   *
+    # Команды:
+    /help - показать это бесполезное сообщение
+    /ping - понг
+    /boobs - показать сиськи
+    /ass — показать попку
 
-# Упоменания
-сиськи - показать сиськи
-жопа - показать попку
-бурик — показать черепаху, похожую на Бурика
+    # Упоменания
+    сиськи - показать сиськи
+    жопа - показать попку
+    бурик — показать черепаху, похожую на Бурика
 
-Потыкай меня палкой: https://github.com/Egregors/SpongeBot
-"""
+    Потыкай меня палкой: https://github.com/Egregors/SpongeBot
+    """
