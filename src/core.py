@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from __future__ import unicode_literals, print_function
 import time
 
 from conf import USERS, URL, TOKEN, HELP_TEXT
