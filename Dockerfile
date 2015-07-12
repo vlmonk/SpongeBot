@@ -15,20 +15,17 @@ ENV LANGUAGE ru_RU:ru
 ENV LC_ALL ru_RU.UTF-8
 
 RUN apt-get update && apt-get install -y \
-build-essential \
 git \
-python \
-python-dev \
-python-setuptools
+python3
 
-RUN easy_install pip
+RUN apt-get install -y python3-pip
 
 ADD . /home/bot/
 
 # RUN pip install
-RUN pip install -r /home/bot/requirements.txt
+RUN pip3 install -r /home/bot/requirements.txt
 
-CMD ["python", "/home/bot/src/main.py"]
+CMD ["python3", "/home/bot/src/main.py"]
 
 
 
