@@ -25,7 +25,6 @@ ADD . /home/bot/
 # RUN pip install
 RUN pip3 install -r /home/bot/requirements.txt
 
+VOLUME ["/var/log/sponge"]
+
 CMD ["python3", "/home/bot/src/main.py"]
-
-
-

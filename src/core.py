@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, print_function
 import time
+import logging
 
-from conf import USERS, URL, TOKEN, HELP_TEXT
+from conf import USERS, URL, TOKEN, HELP_TEXT, DOCKER
 import requests
 from cmd.show_me import show_me_boobs, show_me_butts, show_me_turtle
 
 requests.packages.urllib3.disable_warnings()  # Disable request ssl warnings
+logging.getLogger("requests").setLevel(logging.WARNING)
+
+if DOCKER:
+    logging.basicConfig(level=logging.INFO, filename='/var/log/sponge/bot.log')
+else:
+    logging.basicConfig(level=logging.INFO)
 
 offset = 0  # ID lash update
 
@@ -19,7 +26,7 @@ def check_updates():
     try:
         request = requests.post(URL + TOKEN + '/getUpdates', data=data)
     except:
-        log_event('Error getting updates')
+        log_event('Error getting updates', err=True)
         return False
 
     if not request.status_code == 200: return False
@@ -77,11 +84,14 @@ def send_file():
     pass
 
 
-def log_event(text):
+def log_event(text, err=False):
     """ Логирование
     ToDo: 1) Запись лога в файл \ db \ еще куда-нибудь """
     event = '{}: {}'.format(time.ctime(), text)
-    print(event)
+    if err:
+        logging.error(event)
+    else:
+        logging.info(event)
 
 
 def run_command(offset, name, from_id, cmd):
@@ -101,14 +111,14 @@ def run_command(offset, name, from_id, cmd):
     elif '/help' in cmd:
         send_text(from_id, HELP_TEXT)
 
-    elif 'сиськи' in cmd or '/boobs' in cmd:
+    elif 'сиськ' in cmd or '/boobs' in cmd:
         boobs = show_me_boobs()
         if boobs:
             send_text(from_id, boobs)
         else:
             send_text(from_id, 'Что-то пошло не так.')
 
-    elif 'жопа' in cmd or '/ass' in cmd:
+    elif 'жоп' in cmd or '/ass' in cmd:
         butts = show_me_butts()
         if butts:
             send_text(from_id, butts)

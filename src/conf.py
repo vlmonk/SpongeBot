@@ -6,8 +6,9 @@ __author__ = 'egregors'
 
 DOCKER = True if os.environ.get('DOCKER') else False
 
-# USERS = [-10725690, 567937, 73903140, 113381144]  # id пользователей, от которых можно выполнять команды
-USERS = [567937, 73903140, 113381144]  # id пользователей, от которых можно выполнять команды
+# USERS = [-10725690, ]  # id пользователей, от которых можно выполнять команды
+USERS = [567937, 73903140, 113381144, 101330553]  # id пользователей, от которых можно выполнять команды
+# egre, green. unreal, harald
 
 if DOCKER:
     try:
@@ -22,7 +23,7 @@ if DOCKER:
     except:
         raise Exception('INTERVAL ot TOKEN is not defined')
 else:
-    INTERVAL = 3
+    INTERVAL = 1
     TOKEN = ''  # Токен для доступа к API
 
 URL = 'https://api.telegram.org/bot'  # HTTP Bot API
