@@ -10,6 +10,8 @@ DOCKER = True if os.environ.get('DOCKER') else False
 USERS = [567937, 73903140, 113381144, 101330553]  # id пользователей, от которых можно выполнять команды
 # egre, green. unreal, harald
 
+USERS.append(-23141912) # Пикник
+
 if DOCKER:
     try:
         INTERVAL = int(os.environ['INTERVAL'])
