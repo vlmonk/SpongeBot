@@ -17,7 +17,10 @@ ENV LC_ALL ru_RU.UTF-8
 RUN apt-get update && apt-get install -y \
 git \
 python3 \
-libcurl4-openssl-dev
+libcurl4-openssl-dev \
+libxml2-dev \
+libxslt1-dev \
+python-dev
 
 RUN apt-get install -y python3-pip
 
