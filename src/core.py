@@ -5,7 +5,7 @@ import logging
 
 from conf import USERS, URL, TOKEN, HELP_TEXT, DOCKER
 import requests
-from cmd.show_me import show_me_boobs, show_me_butts, show_me_turtle
+from cmd.show_me import show_me_boobs, show_me_butts, show_me_turtle, show_me_currency
 
 requests.packages.urllib3.disable_warnings()  # Disable request ssl warnings
 logging.getLogger("requests").setLevel(logging.WARNING)
@@ -127,6 +127,9 @@ def run_command(offset, name, from_id, cmd):
 
     elif 'бурик' in cmd:
         send_text(from_id, show_me_turtle())
+
+    elif 'курс' in cmd or 'currency' in cmd:
+        send_text(from_id, show_me_currency())
 
     else:
         pass
