@@ -131,7 +131,8 @@ def run_command(offset, name, from_id, cmd):
         send_text(from_id, show_me_currency())
 
     elif '/bot_say ' in cmd and from_id is ADMIN_ID:
-        send_text(ROOM_ID, cmd.replace('!dev ', ''))
+        print ('admin say!')
+        send_text(ROOM_ID, cmd.replace('/bot_say ', ''))
 
     else:
         pass
