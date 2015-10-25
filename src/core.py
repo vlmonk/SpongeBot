@@ -3,7 +3,7 @@ from __future__ import unicode_literals, print_function
 import time
 import logging
 
-from conf import USERS, URL, TOKEN, HELP_TEXT, DOCKER
+from conf import USERS, URL, TOKEN, HELP_TEXT, DOCKER, ROOM_ID, ADMIN_ID
 import requests
 from cmd.show_me import show_me_boobs, show_me_butts, show_me_turtle, show_me_currency
 
@@ -85,8 +85,7 @@ def send_file():
 
 
 def log_event(text, err=False):
-    """ Логирование
-    ToDo: 1) Запись лога в файл \ db \ еще куда-нибудь """
+    """ Логирование """
     event = '{}: {}'.format(time.ctime(), text)
     if err:
         logging.error(event)
@@ -130,6 +129,9 @@ def run_command(offset, name, from_id, cmd):
 
     elif 'курс' in cmd or 'currency' in cmd:
         send_text(from_id, show_me_currency())
+
+    elif '/bot_say ' in cmd and from_id is ADMIN_ID:
+        send_text(ROOM_ID, cmd.replace('!dev ', ''))
 
     else:
         pass

@@ -3,3 +3,4 @@ ping - Check bot status
 boobs - Show boobs!
 ass - Show butts!
 currency - Show exchange rates
+bot_say - Like Simon, but bot

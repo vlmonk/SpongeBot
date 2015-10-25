@@ -6,17 +6,19 @@ __author__ = 'egregors'
 
 DOCKER = True if os.environ.get('DOCKER') else False
 
-# USERS = [-10725690, ]  # id пользователей, от которых можно выполнять команды
+# USERS = [-10725690, ]  # id пользователей, от которых можно выполнять команды (/dev/null)
 USERS = [567937, 73903140, 113381144, 101330553]  # id пользователей, от которых можно выполнять команды
-# egre, green. unreal, harald
+# egre, green, unreal, harald
 
-USERS.append(-23141912) # Пикник
+USERS.append(-23141912)  # Пикник
 
 if DOCKER:
     try:
         INTERVAL = int(os.environ['INTERVAL'])
         TOKEN = os.environ['TOKEN']
-        USERS.append(int(os.environ['ROOM_ID']))
+        ROOM_ID = int(os.environ['ROOM_ID'])
+        USERS.append(ROOM_ID)
+        ADMIN_ID = int(os.environ['ADMIN_ID']) if os.environ['ADMIN_ID'] else None
 
         print('Interval is: ' + str(INTERVAL))
         print('For token: ' + TOKEN)
@@ -27,6 +29,8 @@ if DOCKER:
 else:
     INTERVAL = 1
     TOKEN = ''  # Токен для доступа к API
+    ROOM_ID = -10725690
+    ADMIN_ID = 567937
 
 URL = 'https://api.telegram.org/bot'  # HTTP Bot API
 

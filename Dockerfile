@@ -5,6 +5,7 @@ MAINTAINER Egregors (egregors@yandex.ru)
 
 ENV DOCKER 1
 ENV TOKEN Dont make this your default
+ENV ADMIN_ID Dont make this your default
 ENV INTERVAL 3
 ENV ROOM_ID -10725690
 
