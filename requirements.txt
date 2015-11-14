@@ -1,8 +1,10 @@
 click==5.1
 cssselect==0.9.1
+future==0.15.2
 grab==0.6.29
-lxml==3.4.4
-pycurl==7.19.5.1
+lxml==3.5.0
+pycurl==7.19.5.3
+python-telegram-bot==2.9.2
 pytils==0.3
 requests==2.8.1
 selection==0.0.11

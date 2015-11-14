@@ -4,10 +4,9 @@ FROM ubuntu:trusty
 MAINTAINER Egregors (egregors@yandex.ru)
 
 ENV DOCKER 1
-ENV TOKEN Dont make this your default
-ENV ADMIN_ID Dont make this your default
+ENV TOKEN '112062291:AAHhOtR7FxNGVYbi9PTHTntPKxpe_fvpdAQ'
 ENV INTERVAL 3
-ENV ROOM_ID -10725690
+ENV CHAT_ID -10725690
 
 # Set the locale, for ru-lang projects
 RUN locale-gen ru_RU.UTF-8
@@ -32,4 +31,4 @@ RUN pip3 install -r /home/bot/requirements.txt
 
 VOLUME ["/var/log/sponge"]
 
-CMD ["python3", "/home/bot/src/main.py"]
+CMD ["python3", "/home/bot/bot_d.py", "start"]
