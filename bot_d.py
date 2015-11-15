@@ -2,7 +2,7 @@
 #
 #   bot_d
 #   =====
-#   ver.: 2.0
+#   ver.: 2.0.1
 #
 #   «Я видел некоторое дерьмо»
 #                       Букля.
@@ -19,13 +19,14 @@ from __future__ import unicode_literals
 import logging
 
 import click
+import random
 import requests
 import telegram
 from config import CHAT_ID, INTERVAL, TOKEN, DOCKER
 from grab import Grab
 
 if DOCKER:
-    logging.basicConfig(level=logging.INFO, filename='/var/log/sponge/bot.log')
+    logging.basicConfig(level=logging.WARNING, filename='/var/log/sponge/bot.log')
 else:
     logging.basicConfig(level=logging.INFO)
 
@@ -103,7 +104,9 @@ def start():
             break
         except Exception as err:
             print(err)
-            send(msg=str(err))
+            bot.sendPhoto(chat_id=CHAT_ID,
+                          photo=random.choice([get_butts_url(), get_boobs_url()]),
+                          caption=str(err))
             LAST_UPDATE_ID += 1
 
 
