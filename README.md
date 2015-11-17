@@ -1,4 +1,4 @@
-# SpongeBot — телеграмм-бот для уютной /dev/null. ver: 2.0.1
+# SpongeBot — телеграмм-бот для уютной /dev/null. ver: 2.0.2
 Небольшой скрипт, который дергает API https://core.telegram.org/bots/api
 
 ## Как запустить?

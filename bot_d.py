@@ -19,11 +19,12 @@ from __future__ import unicode_literals
 import logging
 
 import click
-import random
 import requests
 import telegram
 from config import CHAT_ID, INTERVAL, TOKEN, DOCKER
 from grab import Grab
+
+VERSION = 'ver.: 2.0.2'
 
 if DOCKER:
     logging.basicConfig(level=logging.WARNING, filename='/var/log/sponge/bot.log')
@@ -89,6 +90,9 @@ def start():
 
                 elif 'бурик' in cmd:
                     send(msg='https://mvl-private.s3.eu-central-1.amazonaws.com/files/4NLElhE.jpg')
+
+                elif '/ver' in cmd:
+                    send(msg=VERSION)
 
                 LAST_UPDATE_ID = update.update_id + 1
 
