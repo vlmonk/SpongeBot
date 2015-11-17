@@ -104,9 +104,6 @@ def start():
             break
         except Exception as err:
             print(err)
-            bot.sendPhoto(chat_id=CHAT_ID,
-                          photo=random.choice([get_butts_url(), get_boobs_url()]),
-                          caption=str(err))
             LAST_UPDATE_ID += 1
 
 
