@@ -17,6 +17,6 @@ if DOCKER:
         raise Exception('INTERVAL ot TOKEN is not defined')
 
 # Put your settings right here
-TOKEN = '112062291:AAHhOtR7FxNGVYbi9PTHTntPKxpe_fvpdAQ'
-CHAT_ID = -10725690
+TOKEN = ''
+CHAT_ID = None
 INTERVAL = 3

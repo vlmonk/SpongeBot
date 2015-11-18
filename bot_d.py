@@ -24,7 +24,7 @@ import telegram
 from config import CHAT_ID, INTERVAL, TOKEN, DOCKER
 from grab import Grab
 
-VERSION = 'ver.: 2.0.2'
+VERSION = 'ver.: 2.0.3'
 
 if DOCKER:
     logging.basicConfig(level=logging.WARNING, filename='/var/log/sponge/bot.log')

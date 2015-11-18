@@ -4,9 +4,6 @@ FROM ubuntu:trusty
 MAINTAINER Egregors (egregors@yandex.ru)
 
 ENV DOCKER 1
-ENV TOKEN '112062291:AAHhOtR7FxNGVYbi9PTHTntPKxpe_fvpdAQ'
-ENV INTERVAL 3
-ENV CHAT_ID -10725690
 
 # Set the locale, for ru-lang projects
 RUN locale-gen ru_RU.UTF-8
