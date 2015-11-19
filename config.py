@@ -13,10 +13,10 @@ if DOCKER:
         print('Interval is: ' + str(INTERVAL))
         print('For token: ' + TOKEN)
         print('For Chat: ' + str(CHAT_ID))
-    except:
-        raise Exception('INTERVAL ot TOKEN is not defined')
-
-# Put your settings right here
-TOKEN = ''
-CHAT_ID = None
-INTERVAL = 3
+    except Exception as err:
+        print(err)
+else:
+    # Put your settings right here
+    TOKEN = ''
+    CHAT_ID = None
+    INTERVAL = 3
