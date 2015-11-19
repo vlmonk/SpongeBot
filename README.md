@@ -1,4 +1,4 @@
-# SpongeBot — телеграмм-бот для уютной /dev/null. ver: 2.0.3
+# SpongeBot — телеграмм-бот для уютной /dev/null. ver: 2.1.0
 Небольшой скрипт, который дергает API https://core.telegram.org/bots/api
 
 ## Как запустить?
@@ -16,7 +16,7 @@
 * запустить контейнер
 ``` docker run -d -e "TOKEN=BOT_TOKEN" -e "ROOM_ID=12345" --name sponge_bot bot ```
 * запустить контейнер, да еще что бы логи было удобно читать
-``` docker run -d -e "TOKEN=BOT_TOKEN" -e "ROOM_ID=-12345" -v /path/to/log/:/var/log/sponge/ --name sponge_bot egregors/sponge_bot ```
+``` docker run -d -e "TOKEN=BOT_TOKEN" -e "CHAT_ID=-12345" -v /path/to/log/:/var/log/sponge/ --name sponge_bot egregors/sponge_bot ```
 указав вместо "BOT_TOKEN" токен своего бота, а вместо "12345" id общего чата, где он должен работать.
 
 или просто забрать готовый контейнер с Docker Hub:

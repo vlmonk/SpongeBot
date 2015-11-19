@@ -1,6 +1,5 @@
-help - Show this message
-ping - Check bot status
-boobs - Show boobs!
-ass - Show butts!
-currency - Show exchange rates
-bot_say - Like Simon, but bot
+ping - понг
+boobs - показать сиське
+ass - показать попке
+currency - показать стабильность
+ver - показать текущкю версию бота

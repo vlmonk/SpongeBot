@@ -2,7 +2,7 @@
 #
 #   bot_d
 #   =====
-#   ver.: 2.0.1
+#   ver.: 2.1.0
 #
 #   «Я видел некоторое дерьмо»
 #                       Букля.
@@ -17,6 +17,7 @@
 from __future__ import unicode_literals
 
 import logging
+from time import sleep
 
 import click
 import requests
@@ -24,12 +25,17 @@ import telegram
 from config import CHAT_ID, INTERVAL, TOKEN, DOCKER
 from grab import Grab
 
-VERSION = 'ver.: 2.0.3'
+try:
+    from urllib.error import URLError
+except ImportError:
+    from urllib2 import URLError  # python 2
+
+VERSION = 'ver.: 2.1.0'
 
 if DOCKER:
     logging.basicConfig(level=logging.WARNING, filename='/var/log/sponge/bot.log')
 else:
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.WARNING)
 
 
 @click.group()
@@ -51,26 +57,21 @@ def bot_cli():
 @bot_d.command()
 def start():
     """ Start bot_d daemon """
+    update_id = None
     bot = telegram.Bot(token=TOKEN)
-    global LAST_UPDATE_ID
-
-    try:
-        LAST_UPDATE_ID = bot.getUpdates()[-1].update_id
-    except IndexError:
-        LAST_UPDATE_ID = None
 
     def send(msg: str):
         bot.sendMessage(chat_id=CHAT_ID, text=msg)
 
-    def check_updates(b: telegram.Bot):
-        global LAST_UPDATE_ID
+    def check_updates(b: telegram.Bot, update_id: int) -> int:
+
         for update in b.getUpdates(
-                offset=LAST_UPDATE_ID,
+                offset=update_id,
                 timeout=INTERVAL,
         ):
-            print(update)
             message = update.message.text
             upd_chat_id = update.message.chat_id
+            update_id = update.update_id + 1
             cmd = message.lower()
 
             if upd_chat_id == CHAT_ID:
@@ -94,21 +95,23 @@ def start():
                 elif '/ver' in cmd:
                     send(msg=VERSION)
 
-                LAST_UPDATE_ID = update.update_id + 1
-
             else:
                 bot.sendMessage(chat_id=upd_chat_id, text='This Bot not for you :(')
-                LAST_UPDATE_ID = update.update_id + 1
+
+        return update_id
 
     while True:
         try:
-            check_updates(bot)
-        except KeyboardInterrupt:
-            print('Прервано..')
-            break
-        except Exception as err:
-            print(err)
-            LAST_UPDATE_ID += 1
+            update_id = check_updates(bot, update_id)
+        except telegram.TelegramError as e:
+            # These are network problems with Telegram.
+            if e.message in ("Bad Gateway", "Timed out"):
+                sleep(1)
+            else:
+                raise e
+        except URLError as e:
+            # These are network problems on our end.
+            sleep(1)
 
 
 @bot_cli.command()
