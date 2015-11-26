@@ -96,7 +96,7 @@ def start():
                     send(msg=VERSION)
 
             else:
-                bot.sendMessage(chat_id=upd_chat_id, text='This Bot not for you :(')
+                pass
 
         return update_id
 
