@@ -105,13 +105,14 @@ def start():
             update_id = check_updates(bot, update_id)
         except telegram.TelegramError as e:
             # These are network problems with Telegram.
-            if e.message in ("Bad Gateway", "Timed out"):
+            if e.message in ("Bad Gateway", "Timed out", "Unauthorized"):
                 sleep(1)
             else:
                 raise e
         except URLError as e:
             # These are network problems on our end.
             sleep(1)
+
 
 
 @bot_cli.command()
