@@ -89,9 +89,6 @@ def start():
                 elif 'курс' in cmd or 'currency' in cmd:
                     send(msg=get_currency())
 
-                elif 'бурик' in cmd:
-                    send(msg='https://mvl-private.s3.eu-central-1.amazonaws.com/files/4NLElhE.jpg')
-
                 elif '/ver' in cmd:
                     send(msg=VERSION)
 
