@@ -60,8 +60,8 @@ def start():
     update_id = None
     bot = telegram.Bot(token=TOKEN)
 
-    def send(msg: str):
-        bot.sendMessage(chat_id=CHAT_ID, text=msg)
+    def send(msg: str, ch_id: int):
+        bot.sendMessage(chat_id=ch_id, text=msg)
 
     def check_updates(b: telegram.Bot, update_id: int) -> int:
 
@@ -74,23 +74,23 @@ def start():
             update_id = update.update_id + 1
             cmd = message.lower()
 
-            if upd_chat_id == CHAT_ID:
+            if upd_chat_id in CHAT_ID:
                 # commands list
 
                 if '/ping' in cmd:
-                    send('Pong!')
+                    send('Pong!', ch_id=upd_chat_id)
 
                 elif 'сиськ' in cmd or '/boobs' in cmd:
-                    bot.sendPhoto(chat_id=CHAT_ID, photo=get_boobs_url())
+                    bot.sendPhoto(chat_id=upd_chat_id, photo=get_boobs_url())
 
                 elif 'жоп' in cmd or '/ass' in cmd:
-                    bot.sendPhoto(chat_id=CHAT_ID, photo=get_butts_url())
+                    bot.sendPhoto(chat_id=upd_chat_id, photo=get_butts_url())
 
                 elif 'курс' in cmd or 'currency' in cmd:
-                    send(msg=get_currency())
+                    send(msg=get_currency(), ch_id=upd_chat_id)
 
                 elif '/ver' in cmd:
-                    send(msg=VERSION)
+                    send(msg=VERSION, ch_id=upd_chat_id)
 
             else:
                 pass
@@ -111,13 +111,13 @@ def start():
             sleep(1)
 
 
-
 @bot_cli.command()
 @click.option('-m', '--msg', help='Message to send', type=str)
-def send(msg: str):
+@click.option('-c', '--chat_id', help='Chat ID', type=int)
+def send(msg: str, chat_id: int):
     """ Send the message into Chat """
     bot = telegram.Bot(token=TOKEN)
-    bot.sendMessage(chat_id=CHAT_ID, text=msg)
+    bot.sendMessage(chat_id=chat_id, text=msg)
 
 
 # ================================================================= #
