@@ -21,10 +21,11 @@ python-dev
 
 RUN apt-get install -y python3-pip
 
-ADD . /home/bot/
-
-# RUN pip install
+# install requirements
+ADD requirements.txt /home/bot/requirements.txt
 RUN pip3 install -r /home/bot/requirements.txt
+
+ADD . /home/bot/
 
 VOLUME ["/var/log/sponge"]
 
